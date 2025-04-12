@@ -3,6 +3,16 @@
 import { motion } from 'framer-motion'
 import { Book } from '@/store/useBookStore'
 
+const modalVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+}
+
+const contentVariants = {
+  hidden: { scale: 0.9 },
+  visible: { scale: 1 },
+}
+
 interface BookDetailsProps {
   book: Book
   onClose: () => void
@@ -11,9 +21,10 @@ interface BookDetailsProps {
 export function BookDetails({ book, onClose }: BookDetailsProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
+      variants={modalVariants}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
       className="fixed inset-0 flex items-center justify-center z-50"
     >
       <div
@@ -21,10 +32,8 @@ export function BookDetails({ book, onClose }: BookDetailsProps) {
         onClick={onClose}
       />
       <motion.div
+        variants={contentVariants}
         className="relative bg-white rounded-lg p-8 max-w-2xl w-full mx-4 shadow-2xl"
-        initial={{ scale: 0.9 }}
-        animate={{ scale: 1 }}
-        exit={{ scale: 0.9 }}
       >
         <button
           onClick={onClose}
