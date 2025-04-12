@@ -29,7 +29,7 @@ const initialBooks: Book[] = [
     authors: ['Jordan Mechner'],
     description: 'A comprehensive look at the creation of the classic game.',
     coverColor: '#2A4B9B',
-    position: [0, 4, 0],
+    position: [0, 8, 0],
     rotation: [-0.1, 0.2, 0],
   },
   {
@@ -39,7 +39,7 @@ const initialBooks: Book[] = [
     authors: ['Bailey Richardson', 'Kevin Huynh', 'Kai Elmer Sotto'],
     description: 'A practical guide to cultivating and nurturing communities.',
     coverColor: '#FF8A00',
-    position: [0, 2, 0],
+    position: [0, 4, 0],
     rotation: [0.1, -0.1, 0],
   },
   {
@@ -59,7 +59,7 @@ const initialBooks: Book[] = [
     authors: ['Martin Gurri'],
     description: 'An analysis of how digital technology is reshaping the relationship between authority and the public.',
     coverColor: '#1A237E',
-    position: [0, -2, 0],
+    position: [0, -4, 0],
     rotation: [0.05, -0.2, 0],
   },
   {
@@ -69,7 +69,7 @@ const initialBooks: Book[] = [
     authors: ['Elad Gil'],
     description: 'A guide to scaling startups into high-growth companies.',
     coverColor: '#FF4444',
-    position: [0, -4, 0],
+    position: [0, -8, 0],
     rotation: [-0.1, 0.15, 0],
   },
 ]
