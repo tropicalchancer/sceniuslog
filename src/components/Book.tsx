@@ -91,43 +91,36 @@ const Book = ({ book, onClick, index, mousePosition, position, rotation }: BookP
           />
         </mesh>
         
-        {/* Text group with adjusted rotation */}
-        <group rotation={[0, -Math.PI / 2, 0]} position={[0, 0, 0.1]}>
-          {/* Debug spheres to show text anchor points */}
-          <mesh position={[0, height * 0.35, 0.05]} scale={0.1}>
-            <sphereGeometry />
-            <meshBasicMaterial color="red" />
-          </mesh>
-          <mesh position={[0, -height * 0.35, 0.05]} scale={0.1}>
-            <sphereGeometry />
-            <meshBasicMaterial color="blue" />
-          </mesh>
-
+        {/* Text group - positioned above book */}
+        <group 
+          rotation={[0, -Math.PI / 2, 0]} 
+          position={[0, height + 0.5, 0]}
+        >
           {/* Authors text */}
           <Text
-            position={[0, height * 0.35, 0.05]}
+            position={[0, 0.4, 0]}
             fontSize={0.35}
             color="white"
             anchorX="left"
             anchorY="middle"
-            maxWidth={depth - 1}
+            maxWidth={depth - 0.5}
             renderOrder={2}
             material-toneMapped={false}
             outlineWidth={0.02}
             outlineColor="#000000"
             outlineOpacity={0.8}
           >
-            {book.authors.join('\n').toUpperCase()}
+            {book.authors.join(' & ').toUpperCase()}
           </Text>
 
           {/* Title text */}
           <Text
-            position={[0, -height * 0.35, 0.05]}
+            position={[0, 0, 0]}
             fontSize={0.35}
             color="white"
             anchorX="left"
             anchorY="middle"
-            maxWidth={depth - 1}
+            maxWidth={depth - 0.5}
             renderOrder={2}
             material-toneMapped={false}
             outlineWidth={0.02}
@@ -139,7 +132,7 @@ const Book = ({ book, onClick, index, mousePosition, position, rotation }: BookP
 
           {/* Logo */}
           <Text
-            position={[depth - 0.8, 0, 0.05]}
+            position={[depth - 0.8, 0.2, 0]}
             fontSize={0.4}
             color="white"
             anchorX="right"
