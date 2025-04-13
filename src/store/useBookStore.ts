@@ -29,7 +29,7 @@ const initialBooks: Book[] = [
     authors: ['Dwarkesh Patel', 'Gavin Leech'],
     description: 'A comprehensive look at the rapid advancement of AI technology.',
     coverColor: '#FFFFFF',
-    position: [0, 3.5, 0],
+    position: [0.6, 4.0, 0],
     rotation: [0, 0, 0],
   },
   {
@@ -39,7 +39,7 @@ const initialBooks: Book[] = [
     authors: ['Hobart and Huber'],
     description: 'An exploration of exponential growth and its implications.',
     coverColor: '#B91C1C',
-    position: [0, 2.5, 0],
+    position: [0.45, 3.0, 0],
     rotation: [0, 0, 0],
   },
   {
@@ -49,7 +49,7 @@ const initialBooks: Book[] = [
     authors: ['Peter D. Kaufman'],
     description: 'The wit and wisdom of Charles T. Munger.',
     coverColor: '#EAB308',
-    position: [0, 1.5, 0],
+    position: [0.3, 2.0, 0],
     rotation: [0, 0, 0],
   },
   {
@@ -59,7 +59,7 @@ const initialBooks: Book[] = [
     authors: ['Claire Hughes Johnson'],
     description: 'A guide to building and leading high-growth organizations.',
     coverColor: '#B45309',
-    position: [0, 0.5, 0],
+    position: [0.15, 1.0, 0],
     rotation: [0, 0, 0],
   },
   {
@@ -69,7 +69,7 @@ const initialBooks: Book[] = [
     authors: ['David Deutsch'],
     description: 'An exploration of human knowledge and its infinite potential.',
     coverColor: '#1E3A8A',
-    position: [0, -0.5, 0],
+    position: [0, 0, 0],
     rotation: [0, 0, 0],
   },
   {
@@ -79,7 +79,7 @@ const initialBooks: Book[] = [
     authors: ['Sebastian Mallaby'],
     description: 'A deep dive into the venture capital industry and its impact.',
     coverColor: '#064E3B',
-    position: [0, -1.5, 0],
+    position: [-0.15, -1.0, 0],
     rotation: [0, 0, 0],
   },
   {
@@ -89,7 +89,7 @@ const initialBooks: Book[] = [
     authors: ['Peter Thiel', 'Blake Masters'],
     description: 'Insights on innovation and building breakthrough companies.',
     coverColor: '#3730A3',
-    position: [0, -2.5, 0],
+    position: [-0.3, -2.0, 0],
     rotation: [0, 0, 0],
   },
   {
@@ -99,7 +99,7 @@ const initialBooks: Book[] = [
     authors: ['Jon Gertner'],
     description: 'The story of Bell Labs and its revolutionary innovations.',
     coverColor: '#831843',
-    position: [0, -3.5, 0],
+    position: [-0.45, -3.0, 0],
     rotation: [0, 0, 0],
   },
 ]

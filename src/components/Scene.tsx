@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Environment, OrbitControls } from '@react-three/drei'
+import { Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Book } from './Book'
 import { BookDetails } from './BookDetails'
 import { useBookStore } from '@/store/useBookStore'
@@ -14,28 +14,51 @@ const Scene = () => {
   return (
     <div className="w-full h-screen">
       <Canvas
-        camera={{ position: [5, 0, 15], fov: 45 }}
         className="bg-gradient-to-b from-gray-900 to-gray-800"
+        shadows
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.7} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
+          <PerspectiveCamera
+            makeDefault
+            position={[25, 1.5, 18]}  // Further back, slightly higher for better top view
+            fov={15}  // Narrower FOV to zoom out
+            near={0.1}
+            far={1000}
+            rotation={[-0.08, -Math.PI / 4, 0]}  // Slight downward tilt
+          />
+          <ambientLight intensity={0.4} />
+          <directionalLight 
+            position={[5, 5, 5]} 
+            intensity={0.8}
+            castShadow
+          />
+          <spotLight
+            position={[10, 10, 5]}
+            angle={0.3}
+            penumbra={1}
+            intensity={0.5}
+            castShadow
+          />
           <Environment preset="city" />
           <OrbitControls 
             enableZoom={false}
             enablePan={false}
-            minPolarAngle={Math.PI / 2.5}
-            maxPolarAngle={Math.PI / 2.5}
-            rotateSpeed={0.5}
+            minPolarAngle={Math.PI / 2.1}  // Slight upward view
+            maxPolarAngle={Math.PI / 2.1}
+            minAzimuthAngle={Math.PI / 4}   // Lock at 45 degrees
+            maxAzimuthAngle={Math.PI / 4}
+            rotateSpeed={0}
           />
           
-          {books.map((book) => (
-            <Book
-              key={book.id}
-              book={book}
-              onClick={() => setSelectedBook(book)}
-            />
-          ))}
+          <group position={[0, 0, 0]} scale={0.8}>  {/* Scale down entire stack */}
+            {books.map((book) => (
+              <Book
+                key={book.id}
+                book={book}
+                onClick={() => setSelectedBook(book)}
+              />
+            ))}
+          </group>
         </Suspense>
       </Canvas>
 
