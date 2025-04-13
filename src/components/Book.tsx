@@ -94,7 +94,6 @@ const Book = ({ book, onClick, index, mousePosition }: BookProps) => {
 
       {/* Book spine */}
       <group position={[-width/2, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
-        {/* Spine background */}
         <mesh>
           <planeGeometry args={[depth, height]} />
           <meshStandardMaterial 
@@ -103,42 +102,49 @@ const Book = ({ book, onClick, index, mousePosition }: BookProps) => {
           />
         </mesh>
         
-        {/* Author text */}
-        <Text
-          position={[-depth/2 + 0.6, 0, 0.01]}
-          fontSize={0.2}
-          color="white"
-          anchorX="left"
-          anchorY="middle"
-          maxWidth={depth - 1.5}
-          letterSpacing={0.05}
-        >
-          {book.authors.join(', ').toUpperCase()}
-        </Text>
+        {/* Text group with correct rotation to face camera */}
+        <group rotation={[0, -Math.PI / 2, 0]}>
+          {/* Authors at top */}
+          <Text
+            position={[0, height/4, 0.05]}
+            fontSize={0.25}
+            color="white"
+            anchorX="left"
+            anchorY="middle"
+            maxWidth={depth - 0.8}
+            renderOrder={2}
+            material-toneMapped={false}
+          >
+            {book.authors.join('\n').toUpperCase()}
+          </Text>
 
-        {/* Title text */}
-        <Text
-          position={[0, 0, 0.01]}
-          fontSize={0.2}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-          maxWidth={depth - 1.5}
-          letterSpacing={0.05}
-        >
-          {book.title.toUpperCase()}
-        </Text>
+          {/* Title below authors */}
+          <Text
+            position={[0, -height/4, 0.05]}
+            fontSize={0.25}
+            color="white"
+            anchorX="left"
+            anchorY="middle"
+            maxWidth={depth - 0.8}
+            renderOrder={2}
+            material-toneMapped={false}
+          >
+            {book.title.toUpperCase()}
+          </Text>
 
-        {/* Logo */}
-        <Text
-          position={[depth/2 - 0.3, 0, 0.01]}
-          fontSize={0.2}
-          color="white"
-          anchorX="right"
-          anchorY="middle"
-        >
-          ∞
-        </Text>
+          {/* Logo */}
+          <Text
+            position={[depth - 0.6, 0, 0.05]}
+            fontSize={0.25}
+            color="white"
+            anchorX="right"
+            anchorY="middle"
+            renderOrder={2}
+            material-toneMapped={false}
+          >
+            ∞
+          </Text>
+        </group>
       </group>
     </mesh>
   )

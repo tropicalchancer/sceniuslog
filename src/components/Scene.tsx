@@ -20,21 +20,21 @@ import { AnimatePresence } from 'framer-motion'
 const Lighting = () => {
   return (
     <>
-      <ambientLight intensity={0.4} />
+      <ambientLight intensity={1.2} />
       <pointLight 
         position={[10, 10, 10]} 
-        intensity={0.8} 
+        intensity={1.5} 
         castShadow
       />
       <pointLight
         position={[-10, -10, -10]}
-        intensity={0.3}
+        intensity={0.8}
       />
       <spotLight
         position={[10, 10, 10]}
         angle={0.3}
         penumbra={1}
-        intensity={0.8}
+        intensity={1.2}
         castShadow
       />
     </>
@@ -78,8 +78,8 @@ const Scene = () => {
           shadows
           dpr={[1, 2]}
           camera={{ 
-            position: [20, 8, 0],
-            fov: 35,
+            position: [25, 8, 0],
+            fov: 30,
             near: 0.1,
             far: 100,
           }}
