@@ -7,14 +7,14 @@ import { Text } from '@react-three/drei'
 
 const BOOK_MATERIALS = {
   cover: {
-    roughness: 0.5,
+    roughness: 0.6,
     metalness: 0.1,
-    reflectivity: 0.5,
-    clearcoat: 0.3,
-    clearcoatRoughness: 0.3,
+    reflectivity: 0.8,
+    clearcoat: 0.6,
+    clearcoatRoughness: 0.2,
   },
   spine: {
-    roughness: 0.5,
+    roughness: 0.4,
     metalness: 0.1,
     transparent: true,
     color: '#ffffff',
@@ -30,59 +30,66 @@ const Book = ({ book, onClick }: BookProps) => {
   const meshRef = useRef<THREE.Mesh>(null)
   const [hovered, setHovered] = useState(false)
 
+  // Book dimensions - adjusted for Stripe Press proportions
+  const width = 8 // width of the book
+  const height = 0.5 // thickness of the book
+  const depth = 6 // height of the book spine
+
   return (
     <mesh
       ref={meshRef}
       position={book.position}
-      rotation={book.rotation}
-      scale={hovered ? 1.1 : 1}
+      rotation={[0, -Math.PI * 0.15, 0]} // ~27 degrees rotation
+      scale={hovered ? 1.02 : 1}
       onClick={onClick}
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
+      castShadow
+      receiveShadow
     >
       {/* Main book body */}
-      <boxGeometry args={[4, 0.4, 5]} />
+      <boxGeometry args={[width, height, depth]} />
       <meshPhysicalMaterial
         {...BOOK_MATERIALS.cover}
         color={book.coverColor}
       />
 
       {/* Spine with text */}
-      <group position={[-2, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+      <group position={[-width/2, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
         {/* Spine background */}
         <mesh>
-          <planeGeometry args={[5, 0.4]} />
+          <planeGeometry args={[depth, height]} />
           <meshStandardMaterial {...BOOK_MATERIALS.spine} color={book.coverColor} />
         </mesh>
         
         {/* Author text */}
         <Text
-          position={[-2, 0, 0.01]}
-          fontSize={0.15}
+          position={[-depth/2 + 0.6, 0, 0.01]}
+          fontSize={0.25}
           color="white"
           anchorX="left"
           anchorY="middle"
-          maxWidth={2}
+          maxWidth={depth - 1.5}
         >
           {book.authors.join(', ')}
         </Text>
 
         {/* Title text */}
         <Text
-          position={[0.2, 0, 0.01]}
-          fontSize={0.15}
+          position={[0, 0, 0.01]}
+          fontSize={0.25}
           color="white"
-          anchorX="left"
+          anchorX="center"
           anchorY="middle"
-          maxWidth={2}
+          maxWidth={depth - 1.5}
         >
           {book.title}
         </Text>
 
         {/* Logo */}
         <Text
-          position={[2.2, 0, 0.01]}
-          fontSize={0.15}
+          position={[depth/2 - 0.3, 0, 0.01]}
+          fontSize={0.25}
           color="white"
           anchorX="right"
           anchorY="middle"
