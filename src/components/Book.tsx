@@ -49,7 +49,7 @@ const Book = ({ book, onClick, index, mousePosition }: BookProps) => {
 
   // Book dimensions - adjusted to match Stripe Press
   const width = 12   // Wider book
-  const height = 0.4 // Thinner profile
+  const height = 1.5 // Taller spine (increased from 0.4)
   const depth = 7    // Slightly taller spine
 
   // Handle mouse interaction
@@ -72,7 +72,7 @@ const Book = ({ book, onClick, index, mousePosition }: BookProps) => {
   })
 
   // Calculate vertical offset based on index
-  const yOffset = -index * 2 // Increased spacing between books
+  const yOffset = -index * 2.2 // Reduced spacing between books for tighter stacking
 
   return (
     <mesh

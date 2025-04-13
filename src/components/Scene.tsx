@@ -65,7 +65,7 @@ const Scene = () => {
 
   return (
     <div 
-      className="w-full min-h-[200vh] bg-[#0F0F0F]"
+      className="w-full min-h-[400vh] bg-[#0F0F0F]"
       onMouseMove={handleMouseMove}
     >
       <header className="fixed top-8 left-8 z-10 text-white">
