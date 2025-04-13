@@ -78,7 +78,7 @@ const Scene = () => {
           shadows
           dpr={[1, 2]}
           camera={{ 
-            position: [15, 8, 15],
+            position: [20, 8, 0],
             fov: 35,
             near: 0.1,
             far: 100,
@@ -90,7 +90,10 @@ const Scene = () => {
             <Environment preset="city" />
             
             <Center>
-              <group position={[0, scrollY * -0.01, 0]}>
+              <group 
+                position={[0, scrollY * -0.01, 0]}
+                rotation={[0, Math.PI / 2, 0]}
+              >
                 {books.map((book, index) => (
                   <Book
                     key={book.id}
@@ -109,6 +112,8 @@ const Scene = () => {
               minPolarAngle={Math.PI / 3}
               maxPolarAngle={Math.PI / 2.1}
               rotateSpeed={0.5}
+              minAzimuthAngle={Math.PI / 4}
+              maxAzimuthAngle={Math.PI / 1.5}
             />
           </Suspense>
         </Canvas>

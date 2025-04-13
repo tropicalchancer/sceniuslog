@@ -45,7 +45,7 @@ const Book = ({ book, onClick, index, mousePosition }: BookProps) => {
   const meshRef = useRef<THREE.Mesh>(null)
   // State for hover interactions
   const [hovered, setHovered] = useState(false)
-  const targetRotation = useRef([0, -Math.PI * 0.25, 0])
+  const targetRotation = useRef([0, 0, 0]) // Reset initial rotation
 
   // Book dimensions - adjusted to match Stripe Press
   const width = 12   // Wider book
@@ -57,7 +57,7 @@ const Book = ({ book, onClick, index, mousePosition }: BookProps) => {
     if (meshRef.current) {
       targetRotation.current = [
         mousePosition.y * 0.1,
-        -Math.PI * 0.25 + mousePosition.x * 0.1,
+        mousePosition.x * 0.1,
         0
       ]
     }
