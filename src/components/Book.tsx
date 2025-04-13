@@ -72,7 +72,7 @@ const Book = ({ book, onClick, index, mousePosition }: BookProps) => {
   })
 
   // Calculate vertical offset based on index
-  const yOffset = -index * 2.2 // Reduced spacing between books for tighter stacking
+  const yOffset = -index * 1.2 // Reduced spacing between books for tighter stacking
 
   return (
     <mesh
