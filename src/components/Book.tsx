@@ -1,10 +1,11 @@
 "use client"
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { Book as BookType } from '@/store/useBookStore'
 import * as THREE from 'three'
 import { Text } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { GRID_CONFIG } from '@/config/grid'
 
 /**
  * Material configurations for the book's appearance
@@ -32,6 +33,8 @@ interface BookProps {
   onClick: () => void
   index: number
   mousePosition: { x: number; y: number }
+  position: [number, number, number]
+  rotation: [number, number, number]
 }
 
 /**
@@ -40,34 +43,20 @@ interface BookProps {
  * Renders a single 3D book with proper geometry, materials, and text.
  * Handles hover states and click interactions.
  */
-const Book = ({ book, onClick, index, mousePosition }: BookProps) => {
+const Book = ({ book, onClick, index, mousePosition, position, rotation }: BookProps) => {
   // Reference to the mesh for potential direct manipulations
   const meshRef = useRef<THREE.Mesh>(null)
   // State for hover interactions
   const [hovered, setHovered] = useState(false)
-  const targetRotation = useRef([0, 0, 0]) // Reset initial rotation
+  const targetRotation = useRef(rotation)
 
-  // Book dimensions - adjusted to match Stripe Press
-  const width = 12   // Wider book
-  const height = 1.5 // Taller spine (increased from 0.4)
-  const depth = 7    // Slightly taller spine
+  const { BOOK_WIDTH: width, BOOK_HEIGHT: height, BOOK_DEPTH: depth } = GRID_CONFIG
 
   // Handle mouse interaction
-  useEffect(() => {
-    if (meshRef.current) {
-      targetRotation.current = [
-        mousePosition.y * 0.1,
-        mousePosition.x * 0.1,
-        0
-      ]
-    }
-  }, [mousePosition])
-
-  // Smooth rotation animation
   useFrame(() => {
     if (meshRef.current) {
-      meshRef.current.rotation.x += (targetRotation.current[0] - meshRef.current.rotation.x) * 0.1
-      meshRef.current.rotation.y += (targetRotation.current[1] - meshRef.current.rotation.y) * 0.1
+      meshRef.current.rotation.x += (targetRotation.current[0] + mousePosition.y * 0.1 - meshRef.current.rotation.x) * 0.1
+      meshRef.current.rotation.y += (targetRotation.current[1] + mousePosition.x * 0.1 - meshRef.current.rotation.y) * 0.1
     }
   })
 
@@ -77,7 +66,7 @@ const Book = ({ book, onClick, index, mousePosition }: BookProps) => {
   return (
     <mesh
       ref={meshRef}
-      position={[book.position[0], book.position[1] + yOffset, book.position[2]]}
+      position={[position[0], position[1] + yOffset, position[2]]}
       scale={hovered ? 1.02 : 1}
       onClick={onClick}
       onPointerOver={() => setHovered(true)}
@@ -102,45 +91,64 @@ const Book = ({ book, onClick, index, mousePosition }: BookProps) => {
           />
         </mesh>
         
-        {/* Text group with correct rotation to face camera */}
-        <group rotation={[0, -Math.PI / 2, 0]}>
-          {/* Authors at top */}
+        {/* Text group with adjusted rotation */}
+        <group rotation={[0, -Math.PI / 2, 0]} position={[0, 0, 0.1]}>
+          {/* Debug spheres to show text anchor points */}
+          <mesh position={[0, height * 0.35, 0.05]} scale={0.1}>
+            <sphereGeometry />
+            <meshBasicMaterial color="red" />
+          </mesh>
+          <mesh position={[0, -height * 0.35, 0.05]} scale={0.1}>
+            <sphereGeometry />
+            <meshBasicMaterial color="blue" />
+          </mesh>
+
+          {/* Authors text */}
           <Text
-            position={[0, height/4, 0.05]}
-            fontSize={0.25}
+            position={[0, height * 0.35, 0.05]}
+            fontSize={0.35}
             color="white"
             anchorX="left"
             anchorY="middle"
-            maxWidth={depth - 0.8}
+            maxWidth={depth - 1}
             renderOrder={2}
             material-toneMapped={false}
+            outlineWidth={0.02}
+            outlineColor="#000000"
+            outlineOpacity={0.8}
           >
             {book.authors.join('\n').toUpperCase()}
           </Text>
 
-          {/* Title below authors */}
+          {/* Title text */}
           <Text
-            position={[0, -height/4, 0.05]}
-            fontSize={0.25}
+            position={[0, -height * 0.35, 0.05]}
+            fontSize={0.35}
             color="white"
             anchorX="left"
             anchorY="middle"
-            maxWidth={depth - 0.8}
+            maxWidth={depth - 1}
             renderOrder={2}
             material-toneMapped={false}
+            outlineWidth={0.02}
+            outlineColor="#000000"
+            outlineOpacity={0.8}
           >
             {book.title.toUpperCase()}
           </Text>
 
           {/* Logo */}
           <Text
-            position={[depth - 0.6, 0, 0.05]}
-            fontSize={0.25}
+            position={[depth - 0.8, 0, 0.05]}
+            fontSize={0.4}
             color="white"
             anchorX="right"
             anchorY="middle"
             renderOrder={2}
             material-toneMapped={false}
+            outlineWidth={0.02}
+            outlineColor="#000000"
+            outlineOpacity={0.8}
           >
             ∞
           </Text>

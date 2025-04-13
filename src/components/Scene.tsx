@@ -7,6 +7,7 @@ import { Book } from './Book'
 import { BookDetails } from './BookDetails'
 import { useBookStore } from '@/store/useBookStore'
 import { AnimatePresence } from 'framer-motion'
+import { calculateBookPosition, calculateBookRotation, GRID_CONFIG } from '@/config/grid'
 
 /**
  * Scene Component
@@ -63,10 +64,14 @@ const Scene = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Calculate total height needed for all books
+  const totalHeight = books.length * (GRID_CONFIG.BOOK_HEIGHT + GRID_CONFIG.VERTICAL_GAP)
+
   return (
     <div 
       className="w-full min-h-[400vh] bg-[#0F0F0F]"
       onMouseMove={handleMouseMove}
+      style={{ height: `${Math.max(400, totalHeight * 100)}vh` }}
     >
       <header className="fixed top-8 left-8 z-10 text-white">
         <h1 className="text-2xl font-sans mb-1">SceniusLog</h1>
@@ -94,15 +99,21 @@ const Scene = () => {
                 position={[0, scrollY * -0.01, 0]}
                 rotation={[0, Math.PI / 2, 0]}
               >
-                {books.map((book, index) => (
-                  <Book
-                    key={book.id}
-                    book={book}
-                    index={index}
-                    mousePosition={mousePosition}
-                    onClick={() => setSelectedBook(book)}
-                  />
-                ))}
+                {books.map((book, index) => {
+                  const position = calculateBookPosition(index);
+                  const rotation = calculateBookRotation();
+                  return (
+                    <Book
+                      key={book.id}
+                      book={book}
+                      index={index}
+                      position={position}
+                      rotation={rotation}
+                      mousePosition={mousePosition}
+                      onClick={() => setSelectedBook(book)}
+                    />
+                  );
+                })}
               </group>
             </Center>
 
